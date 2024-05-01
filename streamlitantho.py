@@ -17,7 +17,8 @@ def load_country_representation(year):
 @st.cache_data
 def load_match_length(year):
     file_path = f"DataTI/ti_data/TI_{year}/Statistics/Match Length(mins).csv"
-    return pd.read_csv(file_path, index_col=0)
+    # return pd.read_csv(file_path, index_col=0)
+    return pd.read_csv(file_path)
 
 # Page for hero statistics
 def hero_stats_page():
@@ -106,24 +107,28 @@ elif page == 'Country Representation':
 elif page == 'Match Length':
     year1 = st.sidebar.selectbox('Select Year 1', range(2016, 2022))
     year2 = st.sidebar.selectbox('Select Year 2', range(2016, 2022))
-    # Load data for the selected years
-    match_length_year1 = load_match_length(year1)
-    match_length_year2 = load_match_length(year2)
+    if year1 == 2020 or year2 == 2020:
+        st.write("TI 2020 WAS CANCELLED DUE TO COVID19")
+    else:
 
-    # Plotting
-    fig, axes = plt.subplots(1, 2, figsize=(12, 6))
+        # Load data for the selected years
+        match_length_year1 = load_match_length(year1)
+        match_length_year2 = load_match_length(year2)
 
-    # Plot match length distribution for year 1
-    axes[0].pie(match_length_year1.values.flatten(), labels=match_length_year1.columns, autopct='%1.1f%%', startangle=140)
-    axes[0].set_title(f'Match Length Distribution - {year1}')
+        # Plotting
+        fig, axes = plt.subplots(1, 2, figsize=(25, 15))
 
-    # Plot match length distribution for year 2
-    axes[1].pie(match_length_year2.values.flatten(), labels=match_length_year2.columns, autopct='%1.1f%%', startangle=140)
-    axes[1].set_title(f'Match Length Distribution - {year2}')
+        # Plot match length distribution for year 1
+        axes[0].pie(match_length_year1.values.flatten(), labels=match_length_year1.columns, autopct='%1.1f%%', startangle=140)
+        axes[0].set_title(f'Match Length Distribution - {year1}')
 
-    # Adjust layout
-    plt.tight_layout()
+        # Plot match length distribution for year 2
+        axes[1].pie(match_length_year2.values.flatten(), labels=match_length_year2.columns, autopct='%1.1f%%', startangle=140)
+        axes[1].set_title(f'Match Length Distribution - {year2}')
 
-    # Display the plot
-    st.pyplot(fig)
+        # Adjust layout
+        plt.tight_layout()
+
+        # Display the plot
+        st.pyplot(fig)
 
