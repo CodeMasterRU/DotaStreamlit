@@ -37,7 +37,7 @@ page = st.sidebar.radio('Go to', ['Hero Statistics', 'Country Representation','M
 # Show the selected page
 if page == 'Hero Statistics':
     
-    year1 = st.sidebar.selectbox('Select Year 1', range(2016, 2021))
+    year1 = st.sidebar.selectbox('Select Year 1', range(2016, 2022))
     year2 = st.sidebar.selectbox('Select Year 2', range(2016, 2022))
     if year1 == 2020 or year2 == 2020:
         st.write("TI 2020 WAS CANCELLED DUE TO COVID19")
@@ -75,7 +75,7 @@ if page == 'Hero Statistics':
 elif page == 'Country Representation':
 
 
-    year1 = st.sidebar.selectbox('Select Year 1', range(2016, 2021))
+    year1 = st.sidebar.selectbox('Select Year 1', range(2016, 2022))
     year2 = st.sidebar.selectbox('Select Year 2', range(2016, 2022))
     if year1 == 2020 or year2 == 2020:
         st.write("TI 2020 WAS CANCELLED DUE TO COVID19")
@@ -104,7 +104,7 @@ elif page == 'Country Representation':
         # Call function to display country representation page
         country_rep_page()
 elif page == 'Match Length':
-    year1 = st.sidebar.selectbox('Select Year 1', range(2016, 2021))
+    year1 = st.sidebar.selectbox('Select Year 1', range(2016, 2022))
     year2 = st.sidebar.selectbox('Select Year 2', range(2016, 2022))
     # Load data for the selected years
     match_length_year1 = load_match_length(year1)
