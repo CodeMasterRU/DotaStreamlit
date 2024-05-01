@@ -1,33 +1,31 @@
-from pymongo import MongoClient
 import os
 import pandas as pd
+from pymongo import MongoClient
 
 
 client = MongoClient('localhost', 27017)
-db = client['mydatabase']
+db = client['DataTI'] 
 
 
-def insert_document(collection, document):
-    result = collection.insert_one(document)
-    return result.inserted_id
+def save_to_mongodb(file_path, collection_name):
 
-def save_csv_files_to_mongodb(directory):
-    for root, dirs, files in os.walk(directory):
-        for file in files:
-            if file.endswith('.csv'):
-                file_path = os.path.join(root, file)
-                collection_name = os.path.basename(root)
-                collection = db[collection_name]
+    data = pd.read_csv(file_path)
+    
 
+    data_dict = data.to_dict(orient='records')
+    
 
-                data = pd.read_csv(file_path)
-                records = data.to_dict(orient='records')
+    collection = db[collection_name]
+    
 
-          
-                for record in records:
-                    insert_document(collection, record)
+    collection.insert_many(data_dict)
+    print(f"Данные из файла {file_path} успешно сохранены в коллекцию {collection_name}")
 
 
-data_directory = './DataTI/ti_data/'
+for root, dirs, files in os.walk('DataTI/ti_data'):
+    for file in files:
+        if file.endswith('.csv'):
 
-save_csv_files_to_mongodb(data_directory)
+            collection_name = os.path.splitext(os.path.basename(file))[0] + '_' + os.path.basename(root)
+
+            save_to_mongodb(os.path.join(root, file), collection_name)
