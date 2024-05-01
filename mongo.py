@@ -30,5 +30,4 @@ def save_csv_files_to_mongodb(directory):
 
 data_directory = './DataTI/ti_data/'
 
-
 save_csv_files_to_mongodb(data_directory)
