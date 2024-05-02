@@ -2,17 +2,14 @@ import os
 import pandas as pd
 from pymongo import MongoClient
 
-# Connexion à MongoDB
 client = MongoClient('mongodb://localhost:27017/')
 db = client['ti_data']
 
-# Chemin vers le répertoire contenant les données
 data_dir = 'ti_data'
 
-# Parcourir les répertoires TI_year
 for year_dir in os.listdir(data_dir):
     if os.path.isdir(os.path.join(data_dir, year_dir)):
-        year = year_dir.split('_')[1]  # Extraire l'année du nom du répertoire
+        year = year_dir.split('_')[1] 
         year_collection = db[f"TI_{year}"]  # Créer une nouvelle collection pour l'année
         
         # Parcourir les fichiers CSV dans le répertoire de l'année
